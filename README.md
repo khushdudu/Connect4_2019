@@ -41,7 +41,7 @@ This game was made for the Algothimic and Programming course for my first year o
 
 ## Author Info
 
-- Neha Devi Shakya - Facebook - [neha.d.shakya](https://www.facebook.com/neha.d.shakya/) - Github -[nehazard](https://github.com/nehadshakya)
+- Neha Devi Shakya - Facebook - [neha.d.shakya](https://www.facebook.com/neha.d.shakya/) - Github -[nehadshakya](https://github.com/nehadshakya)
 - Khushi Chitra Uday - Facebook - [khushi.cuday](https://www.facebook.com/khushi.cuday)
 
 [Back To The Top](#Connect-4)
