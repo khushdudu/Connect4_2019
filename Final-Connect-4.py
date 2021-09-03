@@ -114,13 +114,10 @@ def create_grid():
             print("Input not an integer")
 
     global grids
-    grids = []
+    grids = [[] for _ in range(n)]
 
-    for i in range(0, n):
-        grids.append([])
-
-    for i in range(0, n):
-        for j in range(0, n):
+    for i in range(n):
+        for j in range(n):
             grids[i].append(j)
             grids[i][j] = - 1
     display_grid()
@@ -129,18 +126,15 @@ def create_grid():
 # Displays the current state of the grid
 def display_grid():
     # Create temp board for display
-    board = []
+    board = [[] for _ in range(n)]
 
-    for i in range(0, n):
-        board.append([])
-
-    for i in range(0, n):
-        for j in range(0, n):
+    for i in range(n):
+        for j in range(n):
             board[i].append(j)
             board[i][j] = "   "
 
-    for i in range(0, n):
-        for j in range(0, n):
+    for i in range(n):
+        for j in range(n):
             if grids[i][j] == 1:
                 board[i][j] = " X "
             elif grids[i][j] == 2:
@@ -205,26 +199,26 @@ def checker():
 def check_win():
 
     # check horizontal spaces
-    for x in range(0, n):
-        for y in range(0, n - 3):
+    for x in range(n):
+        for y in range(n - 3):
             if grids[x][y] != -1 and grids[x][y + 1] == grids[x][y] and grids[x][y + 2] == grids[x][y] and grids[x][y + 3] == grids[x][y]:
                 return player
 
     # check vertical spaces
-    for y in range(0, n):
-        for x in range(0, n - 3):
+    for y in range(n):
+        for x in range(n - 3):
             if grids[x][y] != -1 and grids[x + 1][y] == grids[x][y] and grids[x + 2][y] == grids[x][y] and grids[x + 3][y] == grids[x][y]:
                 return player
 
     # check / diagonal spaces
-    for x in range(0, n - 3):
+    for x in range(n - 3):
         for y in range(3, n):
             if grids[x][y] != -1 and grids[x + 1][y - 1] == grids[x][y] and grids[x + 2][y - 2] == grids[x][y] and grids[x + 3][y - 3] == grids[x][y]:
                 return player
 
     # check \ diagonal spaces
-    for x in range(0, n - 3):
-        for y in range(0, n - 3):
+    for x in range(n - 3):
+        for y in range(n - 3):
             if grids[x][y] != -1 and grids[x + 1][y + 1] == grids[x][y] and grids[x + 2][y + 2] == grids[x][y] and grids[x + 3][y + 3] == grids[x][y]:
                 return player
 
@@ -234,27 +228,21 @@ def check_win():
 # Switches current player
 def switch_turn():
     global player
-    if player < 2:
-        player = 2
-    else:
-        player = 1
+    player = 2 if player < 2 else 1
 
 
 # Checks if the column is full
 def column_full():
-    if grids[0][user_input - 1] != -1:
-        complete_board_full()
-        return -1
-    else:
+    if grids[0][user_input - 1] == -1:
         return 0
+
+    complete_board_full()
+    return -1
 
 
 # Checks if the whole grid is full
 def complete_board_full():
-    count = 0
-    for i in range(0, n):
-        if grids[0][i] != -1:
-            count = count + 1
+    count = sum(grids[0][i] != -1 for i in range(n))
     if count == n:
         print("The complete board is full,\n The game is a Tie.")
         play_again()
@@ -262,8 +250,8 @@ def complete_board_full():
 1
 # Rotates the grid 90 degrees clockwise
 def rotate_grid_clockwise(k):
-    for l in range(0, k):
-        for i in range(0, n // 2):
+    for _ in range(k):
+        for i in range(n // 2):
             for j in range(i, n - i - 1):
                 temp = grids[i][j]
                 grids[i][j] = grids[n - 1 - j][i]
@@ -277,9 +265,9 @@ def rotate_grid_clockwise(k):
 # Pieces are rearranged after rotation
 def gravity():
     print("After rotation: ")
-    for k in range(0, n):
-        for i in range(0, n - 1):
-            for j in range(0, n):
+    for _ in range(n):
+        for i in range(n - 1):
+            for j in range(n):
                 if grids[i + 1][j] == -1:
                     grids[i + 1][j] = grids[i][j]
                     grids[i][j] = -1
@@ -294,10 +282,10 @@ def play_again():
         try:
             ch = input("Do you want to play again??(Y/N)")
 
-            if ch.upper() == "YES" or ch.upper() == 'Y':
+            if ch.upper() in ["YES", 'Y']:
                 ex_loop = False
                 menu()
-            elif ch.upper() == "NO" or ch.upper() == 'N':
+            elif ch.upper() in ["NO", 'N']:
                 ex_loop = False
                 print("Thank You!!!")
                 input("Enter any key to exit")
